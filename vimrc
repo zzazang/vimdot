@@ -39,7 +39,6 @@ Plugin 'Lokaltog/vim-easymotion'
 
 " My Plugins here:
 " Plugin 'taglist-plus'
-Plugin 'SrcExpl.vim'
 Plugin 'DirDiff.vim'
 
 Plugin 'scrooloose/nerdtree.git'
