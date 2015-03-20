@@ -31,7 +31,7 @@ call vundle#begin()
 " call vundle#begin('~/some/path/here')
 "
 " let Vundle manage Vundle, required
-Plugin 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
 " original repos on github
 Plugin 'tpope/vim-fugitive'
@@ -126,6 +126,7 @@ set wildignore+=tags
 set backup    " keep a backup file
 if has("win32") || has("win64")
   set backupdir=$TMP/vimbak
+  set nobackup		" do not keep a backup file, use versions instead
 elseif has("vms")
   set nobackup		" do not keep a backup file, use versions instead
 else
