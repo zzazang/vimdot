@@ -52,6 +52,7 @@ Plugin 'L9'
 Plugin 'FuzzyFinder'
 Plugin 'bling/vim-airline'
 Plugin 'justinmk/vim-sneak'
+Plugin 'Markdown'
 "
 " ...
 " call vundle#end()
