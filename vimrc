@@ -21,9 +21,10 @@ filetype plugin on
       " On Windows, also use '.vim' instead of 'vimfiles';
       " this makes synchronization across (heterogeneous) systems easier.
       if WINDOWS()
-          set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+        language messages en_US.ISO_8859-1
+        set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
       else
-          set shell=/bin/sh
+        set shell=/bin/sh
       endif
   " }}
 
@@ -39,7 +40,6 @@ filetype plugin on
   setglobal fileencoding=utf-8
   " Newer Windows files might contain utf-8 or utf-16 LE so we might
   " want to try them first.
-  language messages en_US.ISO_8859-1
   set fileencodings=ucs-bom,utf-8,utf-16le,cp949,euc-kr,cp1252,iso-8859-15
 
   if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
