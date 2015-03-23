@@ -1,23 +1,54 @@
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2002 Sep 19
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
-
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
-
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 filetype plugin on
+
+"{{ Environment {{
+  " Identify platform {{
+      silent function! OSX()
+          return has('macunix')
+      endfunction
+      silent function! LINUX()
+          return has('unix') && !has('macunix') && !has('win32unix')
+      endfunction
+      silent function! WINDOWS()
+          return  (has('win16') || has('win32') || has('win64'))
+      endfunction
+  " }}
+
+  " Basics {{
+      set nocompatible        " Must be first line
+      " On Windows, also use '.vim' instead of 'vimfiles';
+      " this makes synchronization across (heterogeneous) systems easier.
+      if WINDOWS()
+          set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+      else
+          set shell=/bin/sh
+      endif
+  " }}
+
+  " Neovim Initialization {{
+      if has('neovim')
+          let s:python_host_init = 'python2 -c "import neovim; neovim.start_host()"'
+          let &initpython = s:python_host_init
+          let &initclipboard = s:python_host_init
+          set unnamedclip
+      endif
+  " }}
+  set encoding=utf-8
+  setglobal fileencoding=utf-8
+  " Newer Windows files might contain utf-8 or utf-16 LE so we might
+  " want to try them first.
+  language messages en_US.ISO_8859-1
+  set fileencodings=ucs-bom,utf-8,utf-16le,cp949,euc-kr,cp1252,iso-8859-15
+
+  if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
+          set termencoding=utf-8
+  else
+          set termencoding=cp949
+  endif
+
+"}}
 
 "{{{ vim bundle
 "--------------------------------------------------------------------
@@ -122,16 +153,22 @@ set wildmenu
 set wildmode=list:longest,full
 set wildignore+=tags
 
-" Backup related stuff
+" Backup related stuff------------
 set backup    " keep a backup file
+let bakDir = "~/.vim/bak"
+
 if has("win32") || has("win64")
-  set backupdir=$TMP/vimbak
-  set nobackup		" do not keep a backup file, use versions instead
+  let bakDir = $TMP."/vimbak"
 elseif has("vms")
   set nobackup		" do not keep a backup file, use versions instead
-else
-  set backupdir=~/.vim/bak
 endif
+
+if !isdirectory(bakDir)
+  call mkdir(bakDir, "p")
+endif
+
+let &backupdir=bakDir
+" Backup related end------
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 if has("win32") || has("win64")
@@ -166,8 +203,10 @@ let &runtimepath.=','.vimDir
 if has('persistent_undo')
     let myUndoDir = expand(vimDir . '/persistent-undo')
     " Create dirs
-    call system('mkdir ' . vimDir)
-    call system('mkdir ' . myUndoDir)
+    if !isdirectory(bakDir)
+      call mkdir(myUndoDir, "p")
+    endif
+
     let &undodir = myUndoDir
     set undofile
 endif

@@ -1,18 +1,21 @@
-" No audible bell
-set vb
+language messages en_US.ISO_8859-1
 
-" No toolbar
-set guioptions-=T
-" No menu
-set guioptions-=m
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
 
-" Use console dialogs
-set guioptions+=c
+set mousehide
 
-au! BufWritePost .gvimrc source %
+set nocompatible
+set noexrc
 
-" Local config
-if filereadable($HOME . "/.gvimrc.local")
-  source ~/.gvimrc.local
-endif
+set modeline
+set modelines=5
+
+set guifont=Envy_Code_R:h11:cANSI
+set guifontwide=NanumGothicCoding:h10:cDEFAULT
+"color pablo
+
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
 
