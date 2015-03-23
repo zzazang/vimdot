@@ -97,6 +97,7 @@ set smartcase
 
 " Incremental searching is sexy
 set incsearch
+set hlsearch
 set showmatch
 
 set nowrap
