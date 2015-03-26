@@ -40,7 +40,7 @@ filetype plugin on
   setglobal fileencoding=utf-8
   " Newer Windows files might contain utf-8 or utf-16 LE so we might
   " want to try them first.
-  set fileencodings=ucs-bom,utf-8,utf-16le,cp949,euc-kr,cp1252,iso-8859-15
+  set fileencodings=ucs-bom,utf-8,cp949,euc-kr,cp1252,iso-8859-15
 
   if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
           set termencoding=utf-8
@@ -84,6 +84,9 @@ Plugin 'FuzzyFinder'
 Plugin 'bling/vim-airline'
 Plugin 'justinmk/vim-sneak'
 Plugin 'Markdown'
+Plugin 'cscope.vim'
+Plugin 'cscope_maps.vim'
+Plugin 'CCTree'
 "
 " ...
 " call vundle#end()
