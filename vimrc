@@ -98,7 +98,9 @@ Plugin 'justinmk/vim-sneak'
 Plugin 'godlygeek/tabular'
 
 Plugin 'plasticboy/vim-markdown'
-Plugin 'cscope.vim'
+if (executable("cscope"))
+  Plugin 'cscope.vim'
+endif
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'The-NERD-Commenter'
 if (executable("ctags"))
