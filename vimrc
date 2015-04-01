@@ -157,23 +157,6 @@ set wildmenu
 set wildmode=list:longest,full
 set wildignore+=tags
 
-" Backup related stuff------------
-set backup    " keep a backup file
-let bakDir = "~/.vim/bak"
-
-if has("win32") || has("win64")
-  let bakDir = $TMP."/vimbak"
-elseif has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-endif
-
-if !isdirectory(bakDir)
-  call mkdir(bakDir, "p")
-endif
-
-let &backupdir=bakDir
-" Backup related end------
-
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 if has("win32") || has("win64")
   let &guioptions = substitute(&guioptions, "t", "", "g")
@@ -205,16 +188,53 @@ let &runtimepath.=','.vimDir
 
 " Keep undo history across sessions by storing it in a file
 if has('persistent_undo')
-    let myUndoDir = expand(vimDir . '/persistent-undo')
-    " Create dirs
-    if !isdirectory(bakDir)
-      call mkdir(myUndoDir, "p")
-    endif
+  let myUndoDir = expand(vimDir . '/persistent-undo')
 
-    let &undodir = myUndoDir
-    set undofile
+  if has("win32") || has("win64")
+    let myUndoDir = $TMP."/vim/persistent_undo"
+  endif
+
+  " Create dirs
+  if !isdirectory(myUndoDir)
+    call mkdir(myUndoDir, "p")
+  endif
+
+  let &undodir = myUndoDir
+  set undofile
 endif
 
+" Backup related stuff------------
+set backup    " keep a backup file
+let bakDir = expand(vimDir . '/bak')
+
+if has("win32") || has("win64")
+  let bakDir = $TMP."/vim/bak"
+elseif has("vms")
+  set nobackup		" do not keep a backup file, use versions instead
+endif
+
+if !isdirectory(bakDir)
+  call mkdir(bakDir, "p")
+endif
+
+let &backupdir=bakDir
+" Backup related end------
+
+" swapfile stuff------------
+set swapfile
+
+let swapDir = expand(vimDir . '/swp')
+
+if has("win32") || has("win64")
+  let swapDir = $TMP."/vim/swp"
+endif
+
+if !isdirectory(swapDir)
+  call mkdir(swapDir, "p")
+endif
+
+let &directory=swapDir
+" swapfile end  ------------
 " }}}
 
 "{{{Tab Completion
