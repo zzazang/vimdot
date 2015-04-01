@@ -3,7 +3,7 @@
 set nocompatible
 filetype plugin on
 
-"{{ Environment {{
+"{{{ Environment
   " Identify platform {{
       silent function! OSX()
           return has('macunix')
@@ -48,7 +48,7 @@ filetype plugin on
           set termencoding=cp949
   endif
 
-"}}
+"}}}
 
 "{{{ vim bundle
 "--------------------------------------------------------------------
@@ -66,32 +66,50 @@ Plugin 'gmarik/Vundle.vim'
 
 " original repos on github
 Plugin 'tpope/vim-fugitive'
-Plugin 'Lokaltog/vim-easymotion'
+"Plugin 'Lokaltog/vim-easymotion'
 
 " My Plugins here:
-" Plugin 'taglist-plus'
+Plugin 'tagbar'
 Plugin 'DirDiff.vim'
 
-Plugin 'scrooloose/nerdtree.git'
-Plugin 'fugitive.vim'
+Plugin 'ctrlp.vim'
+
+"Plugin 'fugitive.vim'
 Plugin 'Buffergator'
+
+" pair of bracket
 Plugin 'unimpaired.vim'
+
 Plugin 'DeleteTrailingWhitespace'
+
+"sublime like multiline edit
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'Solarized'
+"Plugin 'Solarized'
 Plugin 'L9'
 Plugin 'FuzzyFinder'
+
+"Statusbar
 Plugin 'bling/vim-airline'
+
+"motion
 Plugin 'justinmk/vim-sneak'
-Plugin 'Markdown'
+
+"Aligning Text
+Plugin 'godlygeek/tabular'
+
+Plugin 'plasticboy/vim-markdown'
 Plugin 'cscope.vim'
-Plugin 'cscope_maps.vim'
-Plugin 'CCTree'
-"
-" ...
-" call vundle#end()
-"
+Plugin 'scrooloose/nerdtree.git'
+Plugin 'The-NERD-Commenter'
+if (executable("ctags"))
+  Bundle 'xolox/vim-misc'
+  Bundle 'xolox/vim-easytags'
+endif
+
+call vundle#end()
+
 filetype plugin indent on     " required!
+
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -137,7 +155,7 @@ set showmatch
 set nowrap
 set listchars=extends:>,precedes:<
 
-" Tap(Indent) Setting
+" Tab(Indent) Setting
 set shiftwidth=2
 set softtabstop=2
 set tabstop=8
@@ -156,6 +174,10 @@ nnoremap JJJJ <Nop>
 set wildmenu
 set wildmode=list:longest,full
 set wildignore+=tags
+
+set laststatus=2
+set foldenable
+set foldmethod=marker
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 if has("win32") || has("win64")
@@ -271,12 +293,13 @@ function! RotateColorTheme()
       endif
    endwhile
 endfunction
+" color
+map <C-v><F10> :execute RotateColorTheme()<CR>
 
 color ron
-
 "}}}
 
-"{{{{Silver Searcher
+"{{{Silver Searcher
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep
@@ -288,20 +311,6 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
-"}}}}
-
-"{{{plugin related etc
-" Plugin configuration
-let g:DeleteTrailingWhitespace_Action = 'delete'
-let g:DeleteTrailingWhitespace = 1
-let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v[\/]\.(git|hg|svn|pub|testing|util|Servers|.metadata|3rdPartySources|archive|experiment|intellij|pub|scripts|target)$',
-  \ 'file': '\v\.(exe|so|dll|jar|jpg|pdf|sublime-project|sublime-workspace)$',
-  \ }
-let g:ctrlp_max_files = 0
-let g:ctrlp_max_depth = 40
-let NERDTreeHijackNetrw=1
-
 "}}}
 
 "{{{autocmd
@@ -342,8 +351,7 @@ endif " has("autocmd")
 "-----------------------------------------------------
 " map functions keys
 "-----------------------------------------------------
-nnoremap <F2> :set invpaste paste?<CR>
-set pastetoggle=<F2>
+set pastetoggle=<leader>p
 
 "<F11> is set to Tlist below
 nnoremap <F12> :call ToggleMouse()<CR>
@@ -356,12 +364,6 @@ function! ToggleMouse()
     echo "Mouse usage enabled"
   endif
 endfunction
-
-" color
-map <C-v><F10> :execute RotateColorTheme()<CR>
-
-" tab
-map <C-n> <ESC>:tabnew<cr>
 
 " Edit vimrc \ev
 nnoremap <silent> <Leader>ev :tabnew<CR>:e ~/.vimrc<CR>
@@ -384,7 +386,7 @@ nnoremap <space> za
 map N Nzz
 map n nzz
 
-" A-] - Open the definition in a vertical split
+" Alt-] - Open the definition in a vertical split
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 nnoremap <C-j> <C-w>j
@@ -397,34 +399,11 @@ inoremap {<CR> {<CR>}<C-o>O
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 "}}}
-"{{{ taglist related
-"-------------------------------------------------------------------
-" taglist.vim : toggle the taglist window
-" taglist.vim : define the title texts for make
-" taglist.vim : define the title texts for qmake
-"-------------------------------------------------------------------
 
-noremap <silent> <F11>  <Esc><Esc>:Tlist<CR>
-inoremap <silent> <F11>  <Esc><Esc>:Tlist<CR>
+"{{{ tagbar related
+nmap <F8> :TagbarToggle<CR>
+""}}}
 
-" Taglist setting
-let tlist_make_settings  = 'make;m:makros;t:targets'
-let tlist_qmake_settings = 'qmake;t:SystemVariables'
-let Tlist_Process_File_Always = 0
-let Tlist_Enable_Fold_Column = 0
-let Tlist_Display_Tag_Scope = 0
-"let Tlist_Sort_Type = "name"
-let Tlist_Use_Right_Window = 1
-let Tlist_Display_Prototype = 1
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_File_Fold_Auto_Close = 0
-
-if has("autocmd")
-	" ----------  qmake : set file type for *.pro  ----------
-	autocmd BufNewFile,BufRead *.pro  set filetype=qmake
-endif " has("autocmd")
-
-"let Tlist_Auto_Open = 1"}}}
 "{{{ cscope & tags related
 "--------------------------------------------------------------------
 "cscope & tags
@@ -448,6 +427,28 @@ function! LoadCscope()
   endif
 endfunction
 command! LoadCscope call LoadCscope()
+
+" cscope keymap
+nnoremap <leader>fa :call cscope#findInteractive(expand('<cword>'))<CR>
+nnoremap <leader>l :call ToggleLocationList()<CR>
+
+" s: Find this C symbol
+nnoremap  <leader>fs :call cscope#find('s', expand('<cword>'))<CR>
+" g: Find this definition
+nnoremap  <leader>fg :call cscope#find('g', expand('<cword>'))<CR>
+" d: Find functions called by this function
+nnoremap  <leader>fd :call cscope#find('d', expand('<cword>'))<CR>
+" c: Find functions calling this function
+nnoremap  <leader>fc :call cscope#find('c', expand('<cword>'))<CR>
+" t: Find this text string
+nnoremap  <leader>ft :call cscope#find('t', expand('<cword>'))<CR>
+" e: Find this egrep pattern
+nnoremap  <leader>fe :call cscope#find('e', expand('<cword>'))<CR>
+" f: Find this file
+nnoremap  <leader>ff :call cscope#find('f', expand('<cword>'))<CR>
+" i: Find files #including this file
+nnoremap  <leader>fi :call cscope#find('i', expand('<cword>'))<CR>
+
 "}}}
 
 "{{{ Useful
@@ -494,7 +495,7 @@ func! Hv()
                 exe "%!xxd -r"
         endif
 endfunc
-nmap ,h :call Hv()<cr>
+nmap <leader>h :call Hv()<cr>
 
 "============ man page setting =============
 func! Man()
@@ -511,39 +512,115 @@ exe "make"
 endfunc
 nmap ,mk :call Make()<cr><cr>
 
-" Toggle Vexplore with Ctrl-E
-function! ToggleVExplorer()
-  if exists("t:expl_buf_num")
-    let expl_win_num = bufwinnr(t:expl_buf_num)
-    if expl_win_num != -1
-      let cur_win_nr = winnr()
-      exec expl_win_num . 'wincmd w'
-      close
-      exec cur_win_nr . 'wincmd w'
-      unlet t:expl_buf_num
-    else
-      unlet t:expl_buf_num
-    endif
-  else
-    exec '1wincmd w'
-    Vexplore
-    let t:expl_buf_num = bufnr("%")
-  endif
-endfunction
-map <silent> <C-E> :call ToggleVExplorer()<CR>
+""" Code folding options
+nmap <leader>f0 :set foldlevel=0<CR>
+nmap <leader>f1 :set foldlevel=1<CR>
+nmap <leader>f2 :set foldlevel=2<CR>
+nmap <leader>f3 :set foldlevel=3<CR>
+nmap <leader>f4 :set foldlevel=4<CR>
+nmap <leader>f5 :set foldlevel=5<CR>
+nmap <leader>f6 :set foldlevel=6<CR>
+nmap <leader>f7 :set foldlevel=7<CR>
+nmap <leader>f8 :set foldlevel=8<CR>
+nmap <leader>f9 :set foldlevel=9<CR>
+
+"clearing highlighted search
+nmap <silent> <leader>/ :nohlsearch<CR>
+
+"grep related
+nmap _g :grep <C-R>=expand("<cword>")<CR><CR>
+
+map <F7> :botright cwindow<CR>
+map <F5> :cprev<CR>
+map <F6> :cnext<CR>
 
 "}}}
-"
+
 "{{{Auto Commands
 " Automatically cd into the directory that the file is in
 "autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 "autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+autocmd BufRead,BufNewFile *.md set filetype=markdown
 
 " Remove any trailing whitespace that is in the file
 " autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
+
+"Auto apply .vimrc
+autocmd! BufWritePost .vimrc source %
 "}}}
+
+"{{{ Plugins
+  " Fuzzy Finder {
+  let g:FuzzyFinderOptions = { 'Base':{}, 'Buffer':{}, 'File':{}, 'Dir':{}, 'MruFile':{}, 'MruCmd':{}, 'FavFile':{}, 'Tag':{}, 'TaggedFile':{}}
+  " 특정 파일 제외
+  let g:FuzzyFinderOptions.File.excluded_path = '\v\~$|\.o$|\.exe$|\.bak$|\.swp$|\.class$|\.settings$|CVS|((^|[/\\])\.[/\\]$)'
+  " 대소문자 구분하기 (0 : 대소문자 구분, 1 : 대소문자 구분 안함)
+  let g:FuzzyFinderOptions.Base.ignore_case = 0
+
+  " 현재 디렉토리 이하에서 파일명으로 검색해서 읽어오기
+  map <Leader>ff <ESC>:FuzzyFinderFile \*\*\/<CR>
+
+  " 버퍼 목록에서 검색해서 이동하기
+  map <Leader>fb <ESC>:FuzzyFinderBuffer<CR>
+
+  " 디렉토리에서 검색해서 이동하기
+  map <Leader>fd <ESC>:FufDir!<CR>
+  " }
+
+  " EasyTags {
+  " Disabling for now. It doesn't work well on large tag files
+  let g:loaded_easytags = 1  " Disable until it's working better
+  let g:easytags_cmd = 'ctags'
+  let g:easytags_dynamic_files = 1
+  if !has('win32') && !has('win64')
+    let g:easytags_resolve_links = 1
+  endif
+  " }
+
+  " NerdTree {
+  map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+  map <leader>e :NERDTreeFind<CR>
+  nmap <leader>nt :NERDTreeFind<CR>
+
+  let NERDTreeShowBookmarks=1
+  let NERDTreeIgnore=['\\.pyc', '\\\~$', '\\.swo$', '\\.swp$', '\\.git', '\\.hg', '\\.svn', '\\.bzr']
+  let NERDTreeChDirMode=0
+  let NERDTreeQuitOnOpen=1
+  let NERDTreeShowHidden=1
+  let NERDTreeKeepTreeInNewTab=1
+  " }
+
+  " DeleteTrailingWhiteSpace {
+  let g:DeleteTrailingWhitespace_Action = 'delete'
+  let g:DeleteTrailingWhitespace = 1
+  " }
+
+  " ctrlp {
+  let g:ctrlp_custom_ignore = {
+        \ 'dir': '\v[\/]\.(git|hg|svn|pub|testing|util|Servers|.metadata|3rdPartySources|archive|experiment|intellij|pub|scripts|target)$',
+        \ 'file': '\v\.(exe|so|dll|jar|jpg|pdf|sublime-project|sublime-workspace)$',
+        \ }
+  let g:ctrlp_max_files = 0
+  let g:ctrlp_max_depth = 40
+  " }
+
+  " Tabularize {
+  if exists(":Tabularize")
+    nmap <Leader>a= :Tabularize /=<CR>
+    vmap <Leader>a= :Tabularize /=<CR>
+    nmap <Leader>a: :Tabularize /:<CR>
+    vmap <Leader>a: :Tabularize /:<CR>
+    nmap <Leader>a:: :Tabularize /:\\zs<CR>
+    vmap <Leader>a:: :Tabularize /:\\zs<CR>
+    nmap <Leader>a, :Tabularize /,<CR>
+    vmap <Leader>a, :Tabularize /,<CR>
+    nmap <Leader>a| :Tabularize /|<CR>
+    vmap <Leader>a| :Tabularize /|<CR>
+  endif
+  " }
+
+"}}} Plugins
 
 set viminfo='20,<500,"500,s50,h
 
-au! BufWritePost .vimrc source %
 
