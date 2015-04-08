@@ -1,7 +1,7 @@
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
+" Use Vim settings, rather then Vi settings (much better!)."{{{"{{{"}}}
+" This must be first, because it changes other options as a side effect."}}}
 set nocompatible
-filetype plugin on
+filetype plugin on"{{{"}}}
 
 "{{{ Environment
   " Identify platform {{
@@ -84,7 +84,8 @@ Plugin 'DeleteTrailingWhitespace'
 
 "sublime like multiline edit
 Plugin 'terryma/vim-multiple-cursors'
-"Plugin 'Solarized'
+
+Plugin 'Solarized'
 Plugin 'L9'
 Plugin 'FuzzyFinder'
 
@@ -100,10 +101,10 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'cscope.vim'
 Plugin 'scrooloose/nerdtree.git'
-Plugin 'The-NERD-Commenter'
+"Plugin 'The-NERD-Commenter'
 if (executable("ctags"))
-  Bundle 'xolox/vim-misc'
-  Bundle 'xolox/vim-easytags'
+  Plugin 'xolox/vim-misc'
+  Plugin 'xolox/vim-easytags'
 endif
 
 call vundle#end()
@@ -136,7 +137,7 @@ set number
 set visualbell        " vb : 키를 잘못 눌렀을 때 삑 소리 대신 화면이 번쩍임"
 set cmdheight=2
 set noequalalways
-set comments=sl:/*.mb:*.elx:*/
+"set comments=sl:/*.mb:*.elx:*/
 set scrolloff=3
 set autoindent
 set showmode
@@ -184,10 +185,13 @@ if has("win32") || has("win64")
   let &guioptions = substitute(&guioptions, "t", "", "g")
 endif
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
-  syntax on
+set colorcolumn=80
+
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
 endif
 
 "doxygen syntax highlight
@@ -281,7 +285,7 @@ let themeindex=0
 function! RotateColorTheme()
    let y = -1
    while y == -1
-      let colorstring = "ron#elflord#evening#koehler#murphy#pablo#desert#torte#"
+      let colorstring = "ron#elflord#evening#koehler#murphy#pablo#desert#torte#solarized#"
       let x = match( colorstring, "#", g:themeindex )
       let y = match( colorstring, "#", x + 1 )
       let g:themeindex = x + 1
@@ -296,7 +300,6 @@ endfunction
 " color
 map <C-v><F10> :execute RotateColorTheme()<CR>
 
-color ron
 "}}}
 
 "{{{Silver Searcher
@@ -558,10 +561,10 @@ autocmd! BufWritePost .vimrc source %
   let g:FuzzyFinderOptions.Base.ignore_case = 0
 
   " 현재 디렉토리 이하에서 파일명으로 검색해서 읽어오기
-  map <Leader>ff <ESC>:FuzzyFinderFile \*\*\/<CR>
+  map <Leader>ff <ESC>:FufFile **/<CR>
 
   " 버퍼 목록에서 검색해서 이동하기
-  map <Leader>fb <ESC>:FuzzyFinderBuffer<CR>
+  map <Leader>fb <ESC>:FufBuffer<CR>
 
   " 디렉토리에서 검색해서 이동하기
   map <Leader>fd <ESC>:FufDir!<CR>
@@ -618,6 +621,16 @@ autocmd! BufWritePost .vimrc source %
     vmap <Leader>a| :Tabularize /|<CR>
   endif
   " }
+
+  " Solarized
+  syntax enable
+  set background=dark
+  colorscheme solarized
+  if has('gui_running')
+    set background=light
+  else
+    set background=dark
+  endif
 
 "}}} Plugins
 
