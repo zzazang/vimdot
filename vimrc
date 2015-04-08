@@ -1,7 +1,6 @@
-" Use Vim settings, rather then Vi settings (much better!)."{{{"{{{"}}}
-" This must be first, because it changes other options as a side effect."}}}
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
 set nocompatible
-filetype plugin on"{{{"}}}
 
 "{{{ Environment
   " Identify platform {{
@@ -99,7 +98,9 @@ Plugin 'justinmk/vim-sneak'
 Plugin 'godlygeek/tabular'
 
 Plugin 'plasticboy/vim-markdown'
-Plugin 'cscope.vim'
+if (executable("cscope"))
+  Plugin 'cscope.vim'
+endif
 Plugin 'scrooloose/nerdtree.git'
 "Plugin 'The-NERD-Commenter'
 if (executable("ctags"))
@@ -163,6 +164,10 @@ set tabstop=8
 set expandtab
 set smarttab
 au BufNewFile,BufReadPost Makefile*,makefie*,*.mk set noet
+
+set fileformat=unix
+set fileformats=unix,dos
+"set nobinary
 
 "grep option
 set grepprg=grep\ -nH\ --color\ $*
@@ -320,12 +325,6 @@ endif
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
-
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
   au!
@@ -466,6 +465,20 @@ if filereadable(".project.vimrc")
 source .project.vimrc
 endif
 
+"{{{ Open URL in browser
+
+if WINDOWS()
+  let $PATH = $PATH . ';c:\Program Files (x86)\Mozilla FireFox' . ';c:\Program Files\Mozilla FireFox'
+endif
+
+function! Browser ()
+   let line = getline (".")
+   let line = matchstr (line, "http[^   ]*")
+
+   exec "!firefox ".line
+endfunction
+
+"}}}
 "============ file buffer CleanClose =============
 func! CleanClose(tosave)
 if (a:tosave == 1)
@@ -533,17 +546,20 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 "grep related
 nmap _g :grep <C-R>=expand("<cword>")<CR><CR>
 
-map <F7> :botright cwindow<CR>
-map <F5> :cprev<CR>
-map <F6> :cnext<CR>
+map <F2> :cprev<CR>
+map <F3> :cnext<CR>
+map <F4> :botright cwindow<CR>
 
+map <leader>w :call Browser()<CR>
 "}}}
 
 "{{{Auto Commands
 " Automatically cd into the directory that the file is in
 "autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 "autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
-autocmd BufRead,BufNewFile *.md set filetype=markdown
+autocmd BufRead,BufWrite,BufNewFile,BufEnter *.md set filetype=markdown
+" Open markdown files with Chrome.
+autocmd BufRead,BufNewFile,BufEnter *.md  exe 'noremap <F7> :!start firefox %:p<CR>'
 
 " Remove any trailing whitespace that is in the file
 " autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
