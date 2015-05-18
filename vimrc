@@ -90,10 +90,12 @@ Plugin 'FuzzyFinder'
 Plugin 'bling/vim-airline'
 
 "motion
-Plugin 'justinmk/vim-sneak'
+"Plugin 'justinmk/vim-sneak'
 
 "Aligning Text
 Plugin 'godlygeek/tabular'
+
+Plugin 'ack.vim'
 
 Plugin 'plasticboy/vim-markdown'
 if (executable("cscope"))
@@ -655,12 +657,11 @@ autocmd! BufWritePost .vimrc source %
     set background=dark
   endif
   colorscheme solarized
-  if has('gui_running')
-    set background=light
-  else
-    set background=dark
-  endif
 
+  "ack -> ag
+  if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+  endif
 "}}} Plugins
 
 set viminfo='20,<500,"500,s50,h
