@@ -1,5 +1,7 @@
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
+source ~/.vim/bundles.vim
+
 set nocompatible
 
 "{{{ Environment
@@ -46,83 +48,6 @@ set nocompatible
   else
           set termencoding=cp949
   endif
-
-"}}}
-
-"{{{ vim bundle
-"--------------------------------------------------------------------
-"vim bundle
-"--------------------------------------------------------------------
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" alternatively, pass a path where Vundle should install plugins
-" call vundle#begin('~/some/path/here')
-"
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-
-" original repos on github
-Plugin 'tpope/vim-fugitive'
-"Plugin 'Lokaltog/vim-easymotion'
-
-" My Plugins here:
-Plugin 'tagbar'
-Plugin 'DirDiff.vim'
-
-Plugin 'ctrlp.vim'
-
-"Plugin 'fugitive.vim'
-Plugin 'Buffergator'
-
-" pair of bracket
-Plugin 'unimpaired.vim'
-
-"sublime like multiline edit
-Plugin 'terryma/vim-multiple-cursors'
-
-Plugin 'Solarized'
-Plugin 'L9'
-Plugin 'FuzzyFinder'
-
-"Statusbar
-Plugin 'bling/vim-airline'
-
-"motion
-"Plugin 'justinmk/vim-sneak'
-
-"Aligning Text
-Plugin 'godlygeek/tabular'
-
-Plugin 'ack.vim'
-
-Plugin 'plasticboy/vim-markdown'
-if (executable("cscope"))
-  Plugin 'cscope.vim'
-endif
-Plugin 'scrooloose/nerdtree.git'
-"Plugin 'The-NERD-Commenter'
-if (executable("ctags"))
-  Plugin 'xolox/vim-misc'
-  Plugin 'xolox/vim-easytags'
-endif
-
-call vundle#end()
-
-filetype plugin indent on     " required!
-
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
 
 "}}}
 
@@ -233,6 +158,11 @@ if has('persistent_undo')
   let &undodir = myUndoDir
   set undofile
 endif
+
+" highlight current line
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline cursorcolumn
+set cursorline cursorcolumn
 
 " Backup related stuff------------
 set backup    " keep a backup file
@@ -656,7 +586,10 @@ autocmd! BufWritePost .vimrc source %
   else
     set background=dark
   endif
-  colorscheme solarized
+
+  if has('solarized')
+    colorscheme solarized
+  endif
 
   "ack -> ag
   if executable('ag')

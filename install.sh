@@ -1,10 +1,9 @@
 #!/bin/sh
 
-CWD=$(pwd)
+CWD=$(dirname $0)
 
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-rm -f ~/.vimrc && ln -s $CWD/vimrc ~/.vimrc
-rm -f ~/.gvimrc && ln -s $CWD/gvimrc ~/.gvimrc
+rm -rf $CWD/bundle
 
+git clone https://github.com/gmarik/Vundle.vim.git $CWD/bundle/Vundle.vim
 vim +PluginInstall +qall
 
