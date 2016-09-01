@@ -43,10 +43,12 @@ set nocompatible
   " want to try them first.
   set fileencodings=ucs-bom,utf-8,cp949,euc-kr,cp1252,iso-8859-15
 
-  if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
-          set termencoding=utf-8
-  else
-          set termencoding=cp949
+  if WINDOWS()
+    if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
+      set termencoding=utf-8
+    else
+      set termencoding=cp949
+    endif
   endif
 
 "}}}
