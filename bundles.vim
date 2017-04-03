@@ -25,7 +25,7 @@ Plugin 'tomtom/tlib_vim'
 "-----------------
 " Fast navigation
 "-----------------
-Plugin 'edsono/vim-matchit'
+" Plugin 'edsono/vim-matchit' // cannot find
 Plugin 'Lokaltog/vim-easymotion'
 
 "--------------
@@ -41,7 +41,7 @@ Plugin 'nathanaelkane/vim-indent-guides'
 " IDE features
 "--------------
 Plugin 'scrooloose/nerdtree'
-Plugin 'humiaozuzu/TabBar'
+"Plugin 'humiaozuzu/TabBar'
 Plugin 'majutsushi/tagbar'
 Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
@@ -119,7 +119,10 @@ Plugin 'tpope/vim-vividchalk'
 Plugin 'Lokaltog/vim-distinguished'
 Plugin 'chriskempson/vim-tomorrow-theme'
 Plugin 'fisadev/fisa-vim-colorscheme'
+Plugin 'dracula/vim'
 
 call vundle#end()
 filetype plugin indent on     " required!
+
+color dracula
 
