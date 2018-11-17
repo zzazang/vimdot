@@ -235,7 +235,9 @@ function! RotateColorTheme()
    endwhile
 endfunction
 " color
-map <C-v><F10> :execute RotateColorTheme()<CR>
+map <leader>ccc :execute RotateColorTheme()<CR>
+"colorscheme Tomorrow-Night
+colorscheme molokai
 
 "}}}
 
@@ -288,7 +290,7 @@ endif " has("autocmd")
 set pastetoggle=<leader>p
 
 "<F11> is set to Tlist below
-nnoremap <F12> :call ToggleMouse()<CR>
+nnoremap <silent> <leader>mm :call ToggleMouse()<CR>
 function! ToggleMouse()
   if &mouse == 'a'
     set mouse=
@@ -298,9 +300,7 @@ function! ToggleMouse()
     echo "Mouse usage enabled"
   endif
 endfunction
-
-" Edit vimrc \ev
-nnoremap <silent> <Leader>ev :tabnew<CR>:e ~/.vimrc<CR>
+set mouse=
 
 " Up and down are more logical with g..
 nnoremap <silent> k gk
@@ -589,14 +589,15 @@ autocmd! BufWritePost .vimrc source %
     set background=dark
   endif
 
-  if has('solarized')
-    colorscheme solarized
-  endif
-
   "ack -> ag
   if executable('ag')
     let g:ackprg = 'ag --vimgrep'
   endif
+
+  "indent guide
+  let g:indent_guides_enable_on_vim_startup = 1
+
+  let g:airline_theme='molokai'
 "}}} Plugins
 
 set viminfo='20,<500,"500,s50,h

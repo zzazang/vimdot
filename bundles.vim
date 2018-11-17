@@ -36,6 +36,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'sjl/gundo.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'yggdroot/indentline'
 
 "--------------
 " IDE features
@@ -46,7 +47,9 @@ Plugin 'majutsushi/tagbar'
 Plugin 'mileszs/ack.vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
-Plugin 'Lokaltog/vim-powerline'
+"Plugin 'Lokaltog/vim-powerline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/syntastic'
 Plugin 'bronson/vim-trailing-whitespace'
 if (executable("cscope"))
@@ -56,35 +59,38 @@ if (executable("ctags"))
   Plugin 'xolox/vim-misc'
   Plugin 'xolox/vim-easytags'
 endif
+Plugin 'terryma/vim-multiple-cursors'
 
 "-------------
 " Other Utils
 "-------------
-" Bundle 'humiaozuzu/fcitx-status'
-Plugin 'nvie/vim-togglemouse'
+"Plugin 'humiaozuzu/fcitx-status'
+"Plugin 'nvie/vim-togglemouse'
+Plugin 'roxma/vim-paste-easy'
 
 "----------------------------------------
 " Syntax/Indent for language enhancement
 "----------------------------------------
+Plugin 'Chiel92/vim-autoformat'
 "------- web backend ---------
 Plugin '2072/PHP-Indenting-for-VIm'
 "Bundle 'tpope/vim-rails'
 Plugin 'lepture/vim-jinja'
-"Bundle 'digitaltoad/vim-jade'
+Plugin 'digitaltoad/vim-jade'
 
 "------- web frontend ----------
 Plugin 'othree/html5.vim'
 " Bundle 'tpope/vim-haml'
 Plugin 'pangloss/vim-javascript'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'nono/jquery.vim'
-" Bundle 'groenewege/vim-less'
+Plugin 'groenewege/vim-less'
 " Bundle 'wavded/vim-stylus'
-" Bundle 'nono/vim-handlebars'
+Plugin 'nono/vim-handlebars'
 
 "------- markup language -------
 Plugin 'tpope/vim-markdown'
 " Bundle 'timcharper/textile.vim'
+Plugin 'stephpy/vim-yaml'
 
 "------- Ruby --------
 " Bundle 'tpope/vim-endwise'
@@ -98,6 +104,10 @@ Plugin 'kien/rainbow_parentheses.vim'
 " Bundle 'vim-scripts/VimClojure'
 " Bundle 'rosstimson/scala-vim-support'
 
+"------- Java / Kotlin -----
+Plugin 'tfnico/vim-gradle'
+Plugin 'udalov/kotlin-vim'
+
 "------- Scala ------
 Plugin 'derekwyatt/vim-scala'
 Plugin 'derekwyatt/vim-sbt'
@@ -109,20 +119,22 @@ Plugin 'toyamarinyon/vim-swift'
 "------ Rust -----
 Plugin 'rust-lang/rust.vim'
 
+"------ docker/k8s ----
+Plugin 'ekalinin/dockerfile.vim'
+Plugin 'towolf/vim-helm'
+
+"------ Others ----
+Plugin 'yoppi/fluentd.vim'
+
 "--------------
 " Color Schemes
 "--------------
-Plugin 'rickharris/vim-blackboard'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'rickharris/vim-monokai'
-Plugin 'tpope/vim-vividchalk'
-Plugin 'Lokaltog/vim-distinguished'
-Plugin 'chriskempson/vim-tomorrow-theme'
-Plugin 'fisadev/fisa-vim-colorscheme'
-Plugin 'dracula/vim'
+Plugin 'flazz/vim-colorschemes'
+"Plugin 'rickharris/vim-blackboard'
+"Plugin 'chriskempson/vim-tomorrow-theme'
+"Plugin 'fisadev/fisa-vim-colorscheme'
+"Plugin 'dracula/vim'
 
 call vundle#end()
 filetype plugin indent on     " required!
-
-color dracula
 
