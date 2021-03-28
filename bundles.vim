@@ -64,9 +64,10 @@ Plugin 'terryma/vim-multiple-cursors'
 "-------------
 " Other Utils
 "-------------
-"Plugin 'humiaozuzu/fcitx-status'
+" Bundle 'humiaozuzu/fcitx-status'
 "Plugin 'nvie/vim-togglemouse'
 Plugin 'roxma/vim-paste-easy'
+Plugin 'DrawIt'
 
 "----------------------------------------
 " Syntax/Indent for language enhancement
