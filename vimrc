@@ -299,6 +299,19 @@ function! ToggleMouse()
   endif
 endfunction
 
+" toggle wrap
+nnoremap <Leader>wr :call ToggleWrap()<CR>
+function! ToggleWrap()
+  if &wrap
+    set nowrap
+    echo "No Wrap"
+  else
+    set wrap linebreak nolist
+    echo "Line Wrap"
+  endif
+endfunction
+
+
 " Edit vimrc \ev
 nnoremap <silent> <Leader>ev :tabnew<CR>:e ~/.vimrc<CR>
 

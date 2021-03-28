@@ -62,6 +62,7 @@ endif
 "-------------
 " Bundle 'humiaozuzu/fcitx-status'
 Plugin 'nvie/vim-togglemouse'
+Plugin 'DrawIt'
 
 "----------------------------------------
 " Syntax/Indent for language enhancement
